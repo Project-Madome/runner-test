@@ -26,8 +26,21 @@ jobs:
             - uses: actions/checkout@v2
 
             # Runs a set of commands using the runners shell
-            - name: Test connection
+            - name: Setup kubeconfig
               run: |
-                  kubectl version --client
-                  kubectl config view
-                  kubectl get all
+                  SERVICE_ACCOUNT = /var/run/secrets/kubernetes.io/serviceaccount
+
+                  kubectl config set-cluster cluster \
+                      --server=https://kubernetes.default.svc \
+                      --embed-certs \
+                      --certificate-authority=${SERVICE_ACCOUNT}/ca.crt
+
+                  kubectl config set-context \
+                      loaded-context \
+                      --cluster=cluster \
+                      --user=user
+
+                  kubectl config use-context loaded-context
+
+            - name: Run kubectl get all
+              run: kubectl get all
