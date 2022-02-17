@@ -31,9 +31,10 @@ jobs:
                   SERVICE_ACCOUNT=/var/run/secrets/kubernetes.io/serviceaccount
 
                   kubectl config set-cluster cluster \
-                      --server=https://kubernetes.default.svc \
+                      --server=https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT \
                       --embed-certs \
-                      --certificate-authority=$SERVICE_ACCOUNT/ca.crt
+                      --certificate-authority=$SERVICE_ACCOUNT/ca.crt \
+                      --namespace=$(cat $SERVICE_ACCOUNT/namespace)
 
                   kubectl config set-credentials user \
                       --token=$(cat $SERVICE_ACCOUNT/token)
@@ -46,4 +47,4 @@ jobs:
 
             - name: Run kubectl get all
               run: |
-                  echo $HOME
+                  kubectl get all
