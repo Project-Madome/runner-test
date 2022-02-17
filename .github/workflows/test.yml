@@ -29,4 +29,5 @@ jobs:
             - name: Test connection
               run: |
                   kubectl version --client
+                  kubectl config view
                   kubectl get all
