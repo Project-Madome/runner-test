@@ -28,7 +28,7 @@ jobs:
             # Runs a set of commands using the runners shell
             - name: Setup kubeconfig
               run: |
-                  SERVICE_ACCOUNT = /var/run/secrets/kubernetes.io/serviceaccount
+                  SERVICE_ACCOUNT=/var/run/secrets/kubernetes.io/serviceaccount
 
                   kubectl config set-cluster cluster \
                       --server=https://kubernetes.default.svc \
