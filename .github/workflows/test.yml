@@ -25,14 +25,6 @@ jobs:
             # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
             - uses: actions/checkout@v2
 
-            # Runs a single command using the runners shell
-            - name: Install kubectl
-              run: |
-                  curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-                  curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
-                  echo "$(<kubectl.sha256) kubectl" | sha256sum --check
-                  chmod +x kubectl
-
             # Runs a set of commands using the runners shell
             - name: Test connection
               run: |
